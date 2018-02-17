@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { createPosts } from '../actions';
+import _ from 'lodash';
 
 class PostsNew extends Component {
     renderField(field) {
@@ -25,7 +26,12 @@ class PostsNew extends Component {
     }
 
     onSubmit(values) {
-        this.props.createPosts(values);
+        // we have modified this function createPosts to receive 
+        // a callback, so after the post method was completed, 
+        // a redirect to index page is performed
+        this.props.createPosts(values, () => { 
+            this.props.history.push('/')
+        });
     }
 
     render() {
